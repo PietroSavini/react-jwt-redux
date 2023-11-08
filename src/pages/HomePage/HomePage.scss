@@ -1,0 +1,26 @@
+.APP{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    header{
+        background-color: black;
+        height: 80px;
+        position: relative;
+        width: 100%;
+        padding: 0 1rem;
+        .header-content{
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+        }
+    }
+    
+    
+
+    footer{
+        background-color: rgb(44, 44, 44);
+        padding: 0 1rem;
+    }
+}

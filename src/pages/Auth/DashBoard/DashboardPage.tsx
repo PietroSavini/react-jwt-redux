@@ -3,6 +3,7 @@ import { useState , useEffect} from 'react';
 import { TextField, Button } from '@mui/material';
 import { TableFilter } from '../../../components/TableFilter/TableFilter'; 
 import { AxiosHTTP } from '../../../app/AXIOS_ENGINE/AxiosHTTP';
+import AxiosUtils from '../../../app/AXIOS_ENGINE/AxiosUTILS';
 
 
 export const DashboardPage = () => {
@@ -47,11 +48,11 @@ export const DashboardPage = () => {
     } catch (err: any) {
 
       if (!err?.response) {
-        console.log('nessuna risposta dal server');
+        AxiosUtils.Logger.log('nessuna risposta dal server');
       } else if (err.response?.status === 401) {
-        console.log('non autorizzato');
+        AxiosUtils.Logger.log('non autorizzato');
       } else {
-        console.log('errore riprovare');
+        AxiosUtils.Logger.log('errore riprovare');
       };
     };
   };
@@ -61,15 +62,15 @@ export const DashboardPage = () => {
 
     try {
       const result = await AxiosHTTP({url:'api/Test',method:'GET',encode:false});
-      console.log(result)
+      AxiosUtils.Logger.log(result)
     } catch (err: any) {
-      console.log(err)
+      AxiosUtils.Logger.log(err)
       if (!err?.response) {
-        console.log('nessuna risposta dal server');
+        AxiosUtils.Logger.log('nessuna risposta dal server');
       } else if (err.response?.status === 401) {
-        console.log('non autorizzato');
+        AxiosUtils.Logger.log('non autorizzato');
       } else {
-        console.log('richiesta fallita');
+        AxiosUtils.Logger.log('richiesta fallita');
       };
     };
   };

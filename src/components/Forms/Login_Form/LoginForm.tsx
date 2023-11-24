@@ -7,6 +7,7 @@ import { setCredentials } from '../../../app/store/Slices/authSlice';
 import { AxiosHTTP } from '../../../app/AXIOS_ENGINE/AxiosHTTP';
 import FaceIcon from '@mui/icons-material/Face';
 import './LoginForm.scss'
+import AxiosUtils from '../../../app/AXIOS_ENGINE/AxiosUTILS';
 
 export const LoginForm = () => {
 
@@ -24,14 +25,14 @@ export const LoginForm = () => {
         const sFn = () => { }
         const rFn = () => { }
         const user = getValues('username')
-        console.log(user)
+        AxiosUtils.Logger.log(user)
 
         try {
             const result = await AxiosHTTP({ url: '/api/Test/Login', auth: false, body: data, handleRes: { sFn: sFn, eFn: rFn } });
             if ('data' in result) {
                 const accessToken = result.data.accessToken;
                 dispatch(setCredentials({ accessToken, user }));
-                console.log('user ed accessToken salvati nello state')
+                AxiosUtils.Logger.log('user ed accessToken salvati nello state')
                 navigate('/dashboard')
             } else if ('error' in result) {
                 const err = result.error

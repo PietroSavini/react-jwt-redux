@@ -1,3 +1,4 @@
+import AxiosUtils from "./AxiosUTILS";
 class Serializer {
 
   static serialize(selector: string, selectorType: number): { [key: string]: string | number } {
@@ -23,7 +24,7 @@ class Serializer {
     if (Object.keys(formData).length > 0){
       if(this.isJSON(formData)){
         result = formData;
-        console.log('Serializzazione effettuata: ', result)
+        AxiosUtils.Logger.log('Serializzazione effettuata: ', result)
       }
       return result
     }else{
@@ -36,7 +37,7 @@ class Serializer {
   private static getElements(selector: string, selectorType: number): Element[]{
     
     const selection = document.querySelectorAll(selector); 
-    console.log(`selettore:  ${selector}`,selection);
+    AxiosUtils.Logger.log(`selettore:  ${selector}`,selection);
     let result : Element[] = [];
       
       switch(selectorType){

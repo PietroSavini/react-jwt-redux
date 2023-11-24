@@ -3,6 +3,16 @@ import { Base64 } from 'js-base64';
 
 class AxiosUtils {
 
+    static Logger = class {
+
+      private static active :boolean = true;
+      static log = (string?: string | undefined, variable?:any | undefined) => {
+          if(this.active){
+            console.log(`${string}`,variable)
+          }
+      };
+    };
+
     static Strings = class {
 
         static Decode(input: any) {

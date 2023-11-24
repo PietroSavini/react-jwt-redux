@@ -2,7 +2,7 @@ import { Grid } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import React from 'react'
 import './DataTable.scss'
-//dichiaro il type ddi ts per TableData 
+
 type TableData = {
     id: number,
     name: string,
@@ -12,15 +12,14 @@ type TableData = {
 }[];
 
 
+//1) il Componente DataTable accetta un array di oggetti TableData come data
 export const DataTable = ({ data }: { data: TableData }) => {
-    //1) il rafc accetta un array di oggetti TableData come data
-    //2) creo le rows con useMemo per ottimizare il render dei componenti
 
-    //funzione che renderizza nuovamente le rows solo quando l'array data in ingresso differisce da quello di dipendenza
+    // creo le rows con useMemo per ottimizare il render dei componenti
     const rows = React.useMemo(() => {
-		if (data) {
-			return data.map(item => ({
-				id: item.id,
+        if (data) {
+            return data.map(item => ({
+                id: item.id,
 				name: item.name,
                 surname: item.surname,
                 age: item.age,
@@ -43,7 +42,7 @@ export const DataTable = ({ data }: { data: TableData }) => {
         <Grid container mb={10} ml={15} spacing={2}>
             <Grid item sx={{ minWidth: 650 }}>
                 <DataGrid
-                    //datagrid props to create the table
+                    //passo i valori come props per la creazione della table
                     rows={rows}
                     columns={columns}
                     initialState={{

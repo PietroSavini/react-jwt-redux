@@ -24,8 +24,17 @@
   margin: 0 auto;
 }
 
+.fl{
+  display: flex;
+}
+.ac{
+  align-items: center;
+}
 .dc{
   flex-direction: column;
+}
+.jc{
+  justify-content: center;
 }
 
 body {
@@ -34,13 +43,12 @@ body {
     background-color: aliceblue;
     color: black;
     flex-grow: 1;
+    overflow: auto;
     .wrapper{
       max-width: 1280px;
       height: 100%;
       margin: 0 auto;
-      display: flex;
-      align-items: center;
-      overflow: auto;
+      
       @media screen and (min-width:768px){
         width: 80%;
         padding: 2rem 0;

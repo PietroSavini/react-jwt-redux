@@ -1,26 +1,23 @@
 import { Outlet } from "react-router-dom";
-import {useState, useEffect} from 'react';
-import { usePersistLoginMutation } from "../../app/api/PersistLoginApiSlice";
-import { useAppDispatch} from "../../app/hooks";
+import { useState, useEffect } from 'react';
+import { useAppDispatch} from "../app/ReduxTSHooks";
 import { useSelector } from 'react-redux'
-import { selectToken, setCredentials } from "../../auth/authSlice";
+import { selectToken, setCredentials } from "../app/store/Slices/authSlice";
+import { AxiosHTTP } from "../app/AXIOS_ENGINE/AxiosHTTP";
 
 export const PersistentLogin = () => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [persistLogin] = usePersistLoginMutation();
     const token = useSelector(selectToken)
     const isAuth = ( token !== null);
     useEffect(()=>{
         const verifyRefreshToken = async () => {
            try{
-            const result = await persistLogin({}).unwrap()
-            const accessToken = result.accessToken;
-            const username = result.user;
-
-            dispatch(setCredentials({user:username, accessToken:accessToken}))
+            const result = await AxiosHTTP({url:'/api/Test/Refresh',auth:true})
+            const newCredentials = result.data;
+            dispatch(setCredentials(newCredentials))
            }catch(err){
-            console.log(err)
+            console.error(err)
            }finally{
             setIsLoading(false)
            }

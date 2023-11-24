@@ -2,13 +2,13 @@
 import { Routes, Route } from 'react-router-dom'
 
 //Tutte le page che servono per il Router
-import { LoginPage } from './pages/Login/LoginPage'
-import { HomePage } from './pages/HomePage/HomePage';
+import { LoginPage } from './pages/Public/Login/LoginPage'
+import { HomePage } from './pages/Public/HomePage/HomePage';
 import {NotFound} from './pages/404Page/NotFound'
 import { DashboardPage } from './pages/Auth/DashBoard/DashboardPage';
-import { MainPage } from './pages/HomePage/MainPage';
+import { MainPage } from './pages/Public/HomePage/MainPage';
 import  RequireAuth  from './pages/Auth/RequireAuth'
-import { PersistentLogin } from './components/utils/PersistentLogin';
+import { PersistentLogin } from './components/PersistentLogin';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 

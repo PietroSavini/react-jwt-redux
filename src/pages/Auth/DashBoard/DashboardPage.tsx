@@ -1,14 +1,11 @@
 import './DashboardPage.scss'
-import { useRequestMutation } from '../../../app/api/requestApiSlice';
-import { useGetDataMutation } from '../../../app/api/getData';
 import { useState , useEffect} from 'react';
 import { TextField, Button } from '@mui/material';
 import { TableFilter } from '../../../components/TableFilter/TableFilter'; 
+import { AxiosHTTP } from '../../../app/AXIOS_ENGINE/AxiosHTTP';
 
 
 export const DashboardPage = () => {
-  const [message] = useRequestMutation();
-  const [getData] = useGetDataMutation();
   const [data, setData] = useState([])
   const [newData, setNewData] = useState<UserData[]>([]);
   //variabili per tabledata
@@ -27,9 +24,9 @@ export const DashboardPage = () => {
 
   useEffect(()=>{
      setNewData(data);
-     console.log('dati che arrivano alTableFilterComponent: ',newData)
   },[data])
  
+
 
 
   const params = {
@@ -40,7 +37,8 @@ export const DashboardPage = () => {
   //funzione per Chiamata POST con body request e risposta codificate in base64
   const getEncodedData = async (params: Object) => {
     try {
-      const dataArr =  await getData(params);
+      const dataArr =  await AxiosHTTP({url:'/api/Test', body:params});
+      
       //passa array a datatable per poi applicare i filtri 
       if('data' in dataArr){
         setData(dataArr.data)
@@ -62,9 +60,10 @@ export const DashboardPage = () => {
   const handleCall = async () => {
 
     try {
-      const result = await message({}).unwrap();
+      const result = await AxiosHTTP({url:'api/Test',method:'GET',encode:false});
+      console.log(result)
     } catch (err: any) {
-
+      console.log(err)
       if (!err?.response) {
         console.log('nessuna risposta dal server');
       } else if (err.response?.status === 401) {

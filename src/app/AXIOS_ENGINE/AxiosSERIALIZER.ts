@@ -13,7 +13,7 @@ class Serializer {
       const value = (element as HTMLInputElement).value;
       const numericValue = parseFloat(value);
       //aggiungo la classe selected solo per debug visivo
-      element.classList.add('selected');
+      //element.classList.add('selected');
 
       if (name) {
         formData[name] =  isNaN(numericValue) ? value : numericValue;

@@ -24,15 +24,15 @@ class Serializer {
     if (Object.keys(formData).length > 0){
       if(this.isJSON(formData)){
         result = formData;
-       console.log('Serializzazione effettuata: ', result)
+        console.log('Serializzazione effettuata: ', result)
       }
       return result
     }else{
-      throw console.error('ERRORE DI SERIALIZZAZIONE: accettarsi di aver inserito un selettore CSS o un elemento valido nella funzione di serializzazione accoppiato con il giusto tipo di selezione (0: elemento padre es: form o div che contiene elementi figli / 1: elementi singoli o gruppo di elementi singoli ) ');
+      throw console.error('ERRORE DI SERIALIZZAZIONE: accettarsi di aver inserito un selettore CSS corretto accoppiato al giusto tipo di selectorType (1: per ricerca tramite selettore CSS | 2: per ricerca di attributo etc)');
     };
   };
 
-  //funzione che ricerca elementi in base alla stringa passata alla funzione serialize e restituisce array di elementi del DOM corrispondente
+  //funzione che gestisce le casistiche di selezione con switch case e restituisce un Array di Input dal quale preparare il JSON Uscente
   private static getElements(selector: string, selectorType?: number): Element[]{
     
     let result : Element[] = [];
@@ -41,7 +41,7 @@ class Serializer {
       //caso di raggruppamento per selettori CSS
       case 0: 
           const selection = document.querySelectorAll(selector); 
-          console.log(`selettore:  ${selector}`,selection);
+          console.log(`selettore CSS:  ${selector}`,selection);
           result = this.groupElementsByCssSelector(selection)
         break;
 
@@ -55,10 +55,11 @@ class Serializer {
     return result;
   }
 
+  //funzione ricorsiva che analizza l'albero del Dom dal nodo in entrata, cerca gli elementi che hanno attributo name e ritorna un array di input
   private static findInputElements(node:Element): Element[]{
       const inputs: Element[] = [];
      
-      // Se l'elemento corrente ha l'attributo 'data-validation' impostato su 'true', lo aggiungiamo all'array
+      // Se l'elemento corrente ha l'attributo name e non è vuoto
       if (node instanceof Element && node.hasAttribute('name') && node.getAttribute('name') !== '' ) {
         inputs.push(node);
       }
@@ -72,7 +73,7 @@ class Serializer {
     }
   
   
-    // funzione per raggruppamento per elementi elementi contenuti in container / div / form
+    // funzione che restituisce array di input dopo aver invocato la funzione ricorsiva findInputElements sul nodo derivante dal querySelectorAll
     private static groupElementsByCssSelector(selection: NodeListOf<Element>): Element[] {
       //array che contiene tutti gli elementi figli della selection
       
@@ -87,6 +88,8 @@ class Serializer {
     
     }
 
+
+  //funzione di controllo del JSON di uscita
   private static isJSON(entryJSON : Object): boolean {
     const jsonString = JSON.stringify(entryJSON)
     try {

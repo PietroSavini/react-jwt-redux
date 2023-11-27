@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom'
 import { LoginPage } from './pages/Public/Login/LoginPage'
 import { HomePage } from './pages/Public/HomePage/HomePage';
-import {NotFound} from './pages/404Page/NotFound'
+import { NotFound } from './pages/404Page/NotFound'
 import { DashboardPage } from './pages/Auth/DashBoard/DashboardPage';
 import { MainPage } from './pages/Public/HomePage/MainPage';
-import  RequireAuth  from './pages/Auth/RequireAuth'
 import { PersistentLogin } from './components/PersistentLogin';
+import  RequireAuth  from './pages/Auth/RequireAuth'
 
 
 

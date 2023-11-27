@@ -35,9 +35,6 @@ export const AxiosHTTP = (options: Options) => {
 
     //merging dei parametri di base con quelli passati alla funzione
     const newOptions = { ...defaultOptions, ...options };
-    console.log('console.log dinamico da classe',newOptions)
-
-
     //preparo la baseQuery con headers della request dinamici
     const baseQuery = fetchBaseQuery({
         baseUrl: newOptions.baseUrl,
@@ -56,6 +53,7 @@ export const AxiosHTTP = (options: Options) => {
                     headers.set('Authorization', `Bearer ${token}`);
                 };
             };
+
             return headers;
         }
     });
@@ -73,8 +71,7 @@ export const AxiosHTTP = (options: Options) => {
         getState: store.getState
     }
 
-
-    //funzione wrapper che controlla se la chiamata ha bisogno di encoding in Base64 e che automatizza il processo di refresh del token di accesso nel caso in cui esso sia scaduto
+    //funzione wrapper che controlla se la chiamata ha bisogno di encoding in Base64 e che automatizza il processo di refresh dell' Access Token nel caso in cui esso sia scaduto
     const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
         let newArgs = args;
@@ -82,7 +79,7 @@ export const AxiosHTTP = (options: Options) => {
         switch (true) {
             case newOptions.encode:
                 //preparo il body request codificato per la chimata
-                newArgs = { ...newArgs, body: AxiosUtils.Strings.Encode(newArgs.body) };
+                newArgs = { ...newArgs, body: AxiosUtils.Strings.Encode(newArgs.body)};
                 console.log('Chiamata con corpo codificato: ', newArgs);
                 break;
 
@@ -93,11 +90,11 @@ export const AxiosHTTP = (options: Options) => {
 
         let result = await baseQuery(newArgs, api, extraOptions);
 
-        //la funzione Decode è programmata per decifrare solo se la risposta è in base64, se no, restituisce la risposta base
+        //la funzione Decode è programmata per decifrare SOLO se la risposta è in base64, se no, restituisce la risposta base
         let finalResult = AxiosUtils.Strings.Decode(result);
 
         if (finalResult?.error?.status === 401) {
-            console.log('accessToken scaduto, invio refreshToken')
+            console.log('accessToken scaduto, Tentativo di Refresh del token...')
             if (await refreshAccessToken(baseQuery, api, extraOptions)) {
                 result = await baseQuery(newArgs, api, extraOptions);
                 finalResult = AxiosUtils.Strings.Decode(result);
@@ -105,8 +102,7 @@ export const AxiosHTTP = (options: Options) => {
                 alert('sessione scaduta, eseguire nuovamente il Login');
             };
         };
-        //debug-------------------------------------------------------------------------------------------------
-        console.log('risposta: ', finalResult);
+        console.log('Response: ', finalResult);
         return finalResult;
     };
 

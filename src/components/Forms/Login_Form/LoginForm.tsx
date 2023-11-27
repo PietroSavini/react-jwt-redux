@@ -8,6 +8,7 @@ import { AxiosHTTP } from '../../../app/AXIOS_ENGINE/AxiosHTTP';
 import FaceIcon from '@mui/icons-material/Face';
 import './LoginForm.scss'
 import AxiosUtils from '../../../app/AXIOS_ENGINE/AxiosUTILS';
+import Serializer from '../../../app/AXIOS_ENGINE/AxiosSERIALIZER';
 
 export const LoginForm = () => {
 
@@ -25,14 +26,14 @@ export const LoginForm = () => {
         const sFn = () => { }
         const rFn = () => { }
         const user = getValues('username')
-        AxiosUtils.Logger.log(user)
+       console.log(user)
 
         try {
             const result = await AxiosHTTP({ url: '/api/Test/Login', auth: false, body: data, handleRes: { sFn: sFn, eFn: rFn } });
             if ('data' in result) {
                 const accessToken = result.data.accessToken;
                 dispatch(setCredentials({ accessToken, user }));
-                AxiosUtils.Logger.log('user ed accessToken salvati nello state')
+               console.log('user ed accessToken salvati nello state')
                 navigate('/dashboard')
             } else if ('error' in result) {
                 const err = result.error
@@ -83,7 +84,7 @@ export const LoginForm = () => {
                     {genErr && <div className='gen-error'>{genErr}</div>}
                 </Box>
                 {/*  END log in form */}
-                <Button type='submit' sx={{ marginTop: '20px' }} color='primary' variant='contained'>accedi</Button>
+                <Button type='submit' onClick={() => Serializer.serialize('.login-form-group', 0)}  sx={{ marginTop: '20px' }} color='primary' variant='contained'>accedi</Button>
 
             </form>
         </Paper>

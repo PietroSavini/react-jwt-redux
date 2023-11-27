@@ -1,6 +1,5 @@
 //dipendenze Router
 import { Routes, Route } from 'react-router-dom'
-
 //Tutte le page che servono per il Router
 import { LoginPage } from './pages/Public/Login/LoginPage'
 import { HomePage } from './pages/Public/HomePage/HomePage';
@@ -9,8 +8,7 @@ import { DashboardPage } from './pages/Auth/DashBoard/DashboardPage';
 import { MainPage } from './pages/Public/HomePage/MainPage';
 import  RequireAuth  from './pages/Auth/RequireAuth'
 import { PersistentLogin } from './components/PersistentLogin';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+
 
 
 function App() {

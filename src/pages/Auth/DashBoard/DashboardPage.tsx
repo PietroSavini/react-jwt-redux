@@ -48,11 +48,11 @@ export const DashboardPage = () => {
     } catch (err: any) {
 
       if (!err?.response) {
-        AxiosUtils.Logger.log('nessuna risposta dal server');
+        console.log('nessuna risposta dal server');
       } else if (err.response?.status === 401) {
-        AxiosUtils.Logger.log('non autorizzato');
+        console.log('non autorizzato');
       } else {
-        AxiosUtils.Logger.log('errore riprovare');
+        console.log('errore riprovare');
       };
     };
   };
@@ -62,15 +62,15 @@ export const DashboardPage = () => {
 
     try {
       const result = await AxiosHTTP({url:'api/Test',method:'GET',encode:false});
-      AxiosUtils.Logger.log(result)
+      console.log(result)
     } catch (err: any) {
-      AxiosUtils.Logger.log(err)
+      console.log(err)
       if (!err?.response) {
-        AxiosUtils.Logger.log('nessuna risposta dal server');
+        console.log('nessuna risposta dal server');
       } else if (err.response?.status === 401) {
-        AxiosUtils.Logger.log('non autorizzato');
+        console.log('non autorizzato');
       } else {
-        AxiosUtils.Logger.log('richiesta fallita');
+        console.log('richiesta fallita');
       };
     };
   };

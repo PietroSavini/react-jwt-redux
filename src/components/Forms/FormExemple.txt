@@ -22,11 +22,11 @@ export const AxiosForm_formName = (props :Props) => {
   const ref = useRef<HTMLFormElement>(null)
 
   const onSubmit = (data: any) =>{
-      AxiosUtils.Logger.log(data)
+     console.log(data)
   }
 
   const onError = (errors: FieldErrors<any>) => {
-      AxiosUtils.Logger.log("errori: ",errors)
+     console.log("errori: ",errors)
 
   }
     

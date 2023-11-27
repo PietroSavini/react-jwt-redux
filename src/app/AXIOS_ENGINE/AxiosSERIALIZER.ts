@@ -1,7 +1,7 @@
 import AxiosUtils from "./AxiosUTILS";
 class Serializer {
 
-  static serialize(selector: string, selectorType: number): { [key: string]: string | number } {
+  static serialize(selector: string, selectorType?: number): { [key: string]: string | number } {
     
     const formData: { [key: string]: string | number } = {};
     const elemArr: Element[] = this.getElements(selector, selectorType);
@@ -24,7 +24,7 @@ class Serializer {
     if (Object.keys(formData).length > 0){
       if(this.isJSON(formData)){
         result = formData;
-        AxiosUtils.Logger.log('Serializzazione effettuata: ', result)
+       console.log('Serializzazione effettuata: ', result)
       }
       return result
     }else{
@@ -32,12 +32,11 @@ class Serializer {
     };
   };
 
-
   //funzione che ricerca elementi in base alla stringa passata alla funzione serialize e restituisce array di elementi del DOM corrispondente
-  private static getElements(selector: string, selectorType: number): Element[]{
+  private static getElements(selector: string, selectorType?: number): Element[]{
     
     const selection = document.querySelectorAll(selector); 
-    AxiosUtils.Logger.log(`selettore:  ${selector}`,selection);
+   console.log(`selettore:  ${selector}`,selection);
     let result : Element[] = [];
       
       switch(selectorType){
@@ -60,7 +59,7 @@ class Serializer {
       const inputs: Element[] = [];
      
       // Se l'elemento corrente ha l'attributo 'data-validation' impostato su 'true', lo aggiungiamo all'array
-      if (node instanceof Element && node.hasAttribute('name') ) {
+      if (node instanceof Element && node.hasAttribute('name') && node.getAttribute('name') !== '' ) {
         inputs.push(node);
       }
   
@@ -87,13 +86,6 @@ class Serializer {
       return allInputs;
     
     }
-  
-  
-
-  
-
-  // funzione per raggruppamento per classe o id di elementi figli
- 
 
   private static isJSON(entryJSON : Object): boolean {
     const jsonString = JSON.stringify(entryJSON)

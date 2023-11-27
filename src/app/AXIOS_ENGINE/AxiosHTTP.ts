@@ -37,7 +37,7 @@ export const AxiosHTTP = (options: Options) => {
 
     //merging dei parametri di base con quelli passati alla funzione
     const newOptions = { ...defaultOptions, ...options };
-    AxiosUtils.Logger.log('console.log dinamico da classe',newOptions)
+    console.log('console.log dinamico da classe',newOptions)
 
 
     //preparo la baseQuery con headers della request dinamici
@@ -85,11 +85,11 @@ export const AxiosHTTP = (options: Options) => {
             case newOptions.encode:
                 //preparo il body request codificato per la chimata
                 newArgs = { ...newArgs, body: AxiosUtils.Strings.Encode(newArgs.body) };
-                AxiosUtils.Logger.log('Chiamata con corpo codificato: ', newArgs);
+                console.log('Chiamata con corpo codificato: ', newArgs);
                 break;
 
             default:
-                AxiosUtils.Logger.log('Chiamata non codificata: ', newArgs);
+                console.log('Chiamata non codificata: ', newArgs);
                 break;
         };
 
@@ -99,7 +99,7 @@ export const AxiosHTTP = (options: Options) => {
         let finalResult = AxiosUtils.Strings.Decode(result);
 
         if (finalResult?.error?.status === 401) {
-            AxiosUtils.Logger.log('accessToken scaduto, invio refreshToken')
+            console.log('accessToken scaduto, invio refreshToken')
             if (await refreshAccessToken(baseQuery, api, extraOptions)) {
                 result = await baseQuery(newArgs, api, extraOptions);
                 finalResult = AxiosUtils.Strings.Decode(result);
@@ -108,7 +108,7 @@ export const AxiosHTTP = (options: Options) => {
             };
         };
         //debug-------------------------------------------------------------------------------------------------
-        AxiosUtils.Logger.log('risposta: ', finalResult);
+        console.log('risposta: ', finalResult);
         return finalResult;
     };
 
@@ -132,10 +132,10 @@ async function refreshAccessToken(fn: Function, api: any, extraOptions: any) {
         const user = api.getState().auth.user;
         const accessToken = (refreshResult.data as RefreshData).accessToken;
         api.dispatch(setCredentials({ user, accessToken }));
-        AxiosUtils.Logger.log('Nuovo Access Token salvato con successo');
+        console.log('Nuovo Access Token salvato con successo');
         return true;
     } else if (refreshResult?.error.originalStatus === 401) {
-        AxiosUtils.Logger.log('Refresh Token Scaduto, eseguire nuovamente il LogIn');
+        console.log('Refresh Token Scaduto, eseguire nuovamente il LogIn');
         api.dispatch(logOut());
         return false;
     };

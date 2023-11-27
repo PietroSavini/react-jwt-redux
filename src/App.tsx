@@ -35,10 +35,12 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage/>}>
             {/* Public Routes */}
-            {/* prima page visualizzata all'avvio */}
+
             <Route index element={<MainPage/>}/>
             <Route path='login' element={<LoginPage/>}/>
+
             {/*Protected Routes */}
+
             <Route element={<PersistentLogin/>}>
               <Route element={<RequireAuth/>}>
                 <Route path='dashboard' element={<DashboardPage/>}/>

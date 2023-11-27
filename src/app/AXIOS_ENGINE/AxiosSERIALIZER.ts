@@ -45,10 +45,10 @@ class Serializer {
           result = this.groupElementsByCssSelector(selection)
         break;
 
-        //altri casi es raggruppamento per attributo name o altro.
-        case 1:
-          
-        break;
+      //altri casi es raggruppamento per attributo name.
+      case 1:
+        
+      break;
 
       };
 

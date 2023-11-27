@@ -16,6 +16,7 @@ function App() {
   useEffect(() => {
     //abilito / disabilito console.log()
     /*
+      //per farlo funzionare si deve sviluppare EndPoint
       //faccio chiamata al server su endpoint che risponde in base alla decisione di loggare o non
       //se ritorna 0 non loggo se ritorna 1 loggo
       const result = AxiosHTTP('/api/Test/logger', method:'GET' ...etc)

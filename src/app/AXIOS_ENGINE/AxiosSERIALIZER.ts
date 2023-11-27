@@ -50,7 +50,7 @@ class Serializer {
         
       break;
 
-      };
+    };
 
     return result;
   }

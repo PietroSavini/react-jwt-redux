@@ -1,8 +1,22 @@
 //Libreria Utility 
 import { Base64 } from 'js-base64';
 
-class AxiosUtils {
+class Utility {
 
+    static Logger = class {
+      private static oldConsoleLog  :((...data: any[]) => void) | null  =   null;
+
+
+      static enable = ( ) => {
+        if(this.oldConsoleLog == null) return;
+        window['console']['log']  = this.oldConsoleLog ;
+      };
+      static disable = () => {
+        this.oldConsoleLog = console.log;
+        window['console']['log']  = function() {};
+      }
+      
+    };
     static Strings = class {
 
         static Decode(input: any) {
@@ -30,4 +44,4 @@ class AxiosUtils {
 
 };
 
-export default AxiosUtils;
+export default Utility;

@@ -34,7 +34,7 @@ export const AxiosForm_formName = (props :Props) => {
 
     <form onSubmit={handleSubmit(onSubmit, onError)} ref={ref} noValidate>
 
-///caso in cui abbiamo un form singolo---------------------------------------------------------
+///caso in cui abbiamo un form singolo
         <TextField
                 sx={{ marginBottom: '10px' }}
                 error={!!errors.email}
@@ -46,17 +46,17 @@ export const AxiosForm_formName = (props :Props) => {
                 type='email'
                 label='Email'
                 id='email2'
-                name='email'
             />
 
            {/* altri componenti di input */}
-///---------------------------------------------------------------------------------------------   
 
 ///caso in cui abbiamo un multiform (il secondo form appare al click della checkbox sul primo form)-------------------------------------------------------------
-        <h2>componente di esempio per l utilizzo dei Form</h2>
+        <h2>componenti di esempio per l utilizzo dei Form</h2>
         <Form1 registerFn={register} errorsArr={errors} checkboxFn={setCheckboxValue}/>
-        {checkboxValue === 'on' && 
-        <Form2 registerFn={register} errorsArr={errors} />}
+        
+        //considione che fa apparire altro form
+
+        {checkboxValue === 'on' && <Form2 registerFn={register} errorsArr={errors} />}
 ///----------------------------------------------------------------------------------------------   
 
         <Button type='submit' sx={{marginTop:'20px', }} color='warning' variant='contained'>submit</Button>

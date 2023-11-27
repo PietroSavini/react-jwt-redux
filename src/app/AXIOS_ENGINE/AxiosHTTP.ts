@@ -1,5 +1,4 @@
 //Libreria di gestione chiamate
-
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setCredentials, logOut } from '../store/Slices/authSlice';
 import AxiosUtils from './AxiosUTILS';
@@ -19,7 +18,6 @@ type Options = {
         eFn: Function;
     }
 };
-
 
 export const AxiosHTTP = (options: Options) => {
 

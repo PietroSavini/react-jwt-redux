@@ -1,5 +1,3 @@
-import { LoginPage } from '../Login/LoginPage';
-import './HomePage.scss'
 import { Link, Outlet } from 'react-router-dom';
 export const HomePage = () => {
   return (

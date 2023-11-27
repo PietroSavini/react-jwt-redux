@@ -35,17 +35,17 @@ class Serializer {
   //funzione che ricerca elementi in base alla stringa passata alla funzione serialize e restituisce array di elementi del DOM corrispondente
   private static getElements(selector: string, selectorType?: number): Element[]{
     
-    const selection = document.querySelectorAll(selector); 
-   console.log(`selettore:  ${selector}`,selection);
     let result : Element[] = [];
-      
-      switch(selectorType){
-        //caso di raggruppamento per elementi genitori 
-        case 0: 
-          result = this.groupElementsByParents(selection)
+    
+    switch(selectorType){
+      //caso di raggruppamento per selettori CSS
+      case 0: 
+          const selection = document.querySelectorAll(selector); 
+          console.log(`selettore:  ${selector}`,selection);
+          result = this.groupElementsByCssSelector(selection)
         break;
 
-        //caso di raggruppamento per classe o id di elementi figli
+        //altri casi es raggruppamento per attributo name o altro.
         case 1:
           
         break;
@@ -73,7 +73,7 @@ class Serializer {
   
   
     // funzione per raggruppamento per elementi elementi contenuti in container / div / form
-    private static groupElementsByParents(selection: NodeListOf<Element>): Element[] {
+    private static groupElementsByCssSelector(selection: NodeListOf<Element>): Element[] {
       //array che contiene tutti gli elementi figli della selection
       
       const allInputs: Element[] = [];

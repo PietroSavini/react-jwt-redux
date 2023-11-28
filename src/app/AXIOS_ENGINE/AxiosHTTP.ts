@@ -80,17 +80,18 @@ export const AxiosHTTP = (options: Options) => {
             case newOptions.encode:
                 //preparo il body request codificato per la chimata
                 newArgs = { ...newArgs, body: AxiosUtils.Strings.Encode(newArgs.body)};
-                break;
+            break;
 
             default:
-                break;
+
+            break;
         };
 
         let result = await baseQuery(newArgs, api, extraOptions);
 
         //la funzione Decode è programmata per decifrare SOLO se la risposta è in base64, se no, restituisce la risposta base
         let finalResult = AxiosUtils.Strings.Decode(result);
-
+        //controllo se la risposta contiene l'errore 401, se si vuoldire che l'accessToken è scadto e va eseguito il refresh.
         if (finalResult?.error?.status === 401) {
             console.error('accessToken scaduto, Tentativo di Refresh del token...')
             if (await refreshAccessToken(baseQuery, api, extraOptions)) {
@@ -100,7 +101,7 @@ export const AxiosHTTP = (options: Options) => {
                 alert('sessione scaduta, eseguire nuovamente il Login');
             };
         };
-        console.log('Response: ', finalResult);
+
         return finalResult;
     };
 
@@ -111,7 +112,7 @@ export const AxiosHTTP = (options: Options) => {
 
 //funzione per la chiamata all'endpoint di refresh.
 async function refreshAccessToken(fn: Function, api: any, extraOptions: any) {
-    interface RefreshData {
+    type RefreshData = {
         accessToken: string;
     };
 
@@ -121,14 +122,20 @@ async function refreshAccessToken(fn: Function, api: any, extraOptions: any) {
     }, api, extraOptions);
 
     if (refreshResult?.data) {
+        //prendo lo user dallo state in qunato è già presente
         const user = api.getState().auth.user;
+        //prendo il nuovo Access Token
         const accessToken = (refreshResult.data as RefreshData).accessToken;
+        //Salvo il nuovo Token nello state
         api.dispatch(setCredentials({ user, accessToken }));
-        console.log('Nuovo Access Token salvato con successo');
+
         return true;
+
     } else if (refreshResult?.error.originalStatus === 401) {
-        console.log('Refresh Token Scaduto, eseguire nuovamente il LogIn');
+        console.error('Refresh Token Scaduto');
+        //eseguo il logOut
         api.dispatch(logOut());
+
         return false;
     };
 };

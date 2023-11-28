@@ -1,14 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 
-//interface della slice
-interface AuthState {
+type AuthState = {
     user: string | null;
     token: string | null;
 }
-
-//interface dell' oggetto User
-
 
 //initialState
 const initialState: AuthState = {

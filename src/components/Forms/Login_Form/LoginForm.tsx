@@ -23,13 +23,10 @@ export const LoginForm = () => {
 
     const onSubmit = async (data: any) => {
 
-        const sFn = () => { }
-        const rFn = () => { }
         const user = getValues('username')
-       console.log(user)
 
         try {
-            const result = await AxiosHTTP({ url: '/api/Test/Login', auth: false, body: data, handleRes: { sFn: sFn, eFn: rFn } });
+            const result = await AxiosHTTP({ url: '/api/Test/Login', auth: false, body: data });
             if ('data' in result) {
                 const accessToken = result.data.accessToken;
                 dispatch(setCredentials({ accessToken, user }));

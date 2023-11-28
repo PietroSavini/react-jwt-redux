@@ -94,7 +94,7 @@ export const AxiosHTTP = (options: Options) => {
         let finalResult = AxiosUtils.Strings.Decode(result);
 
         if (finalResult?.error?.status === 401) {
-            console.log('accessToken scaduto, Tentativo di Refresh del token...')
+            console.error('accessToken scaduto, Tentativo di Refresh del token...')
             if (await refreshAccessToken(baseQuery, api, extraOptions)) {
                 result = await baseQuery(newArgs, api, extraOptions);
                 finalResult = AxiosUtils.Strings.Decode(result);

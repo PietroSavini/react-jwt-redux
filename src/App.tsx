@@ -8,7 +8,7 @@ import { NotFound } from './pages/404Page/NotFound'
 import { DashboardPage } from './pages/Auth/DashBoard/DashboardPage';
 import { MainPage } from './pages/Public/HomePage/MainPage';
 import { PersistentLogin } from './components/PersistentLogin';
-import  RequireAuth  from './pages/Auth/RequireAuth'
+import  RequireAuth  from './components/RequireAuth'
 
 
 

@@ -80,11 +80,9 @@ export const AxiosHTTP = (options: Options) => {
             case newOptions.encode:
                 //preparo il body request codificato per la chimata
                 newArgs = { ...newArgs, body: AxiosUtils.Strings.Encode(newArgs.body)};
-                console.log('Chiamata con corpo codificato: ', newArgs);
                 break;
 
             default:
-                console.log('Chiamata non codificata: ', newArgs);
                 break;
         };
 

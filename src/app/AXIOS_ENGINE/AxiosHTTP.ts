@@ -32,7 +32,6 @@ export const AxiosHTTP = (options: Options) => {
         body: undefined,
         handleRes: undefined,
     };
-
     //merging dei parametri di base con quelli passati alla funzione
     const newOptions = { ...defaultOptions, ...options };
     //preparo la baseQuery con headers della request dinamici
@@ -58,24 +57,10 @@ export const AxiosHTTP = (options: Options) => {
         }
     });
 
-    //argomenti ripreparati che verrano passati alla query per eseguire le chiamate
-    const argsForQuery = {
-        url: newOptions.url,
-        method: newOptions.method,
-        body: newOptions.body
-    }
-
-    // oggetto che comprende le azioni redux con accesso diretto allo store
-    const apiForQuery = {
-        dispatch: store.dispatch,
-        getState: store.getState
-    }
-
     //funzione wrapper che controlla se la chiamata ha bisogno di encoding in Base64 e che automatizza il processo di refresh dell' Access Token nel caso in cui esso sia scaduto
     const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
         let newArgs = args;
-
         switch (true) {
             case newOptions.encode:
                 //preparo il body request codificato per la chimata
@@ -89,9 +74,9 @@ export const AxiosHTTP = (options: Options) => {
 
         let result = await baseQuery(newArgs, api, extraOptions);
 
-        //la funzione Decode è programmata per decifrare SOLO se la risposta è in base64, se no, restituisce la risposta base
+        //la funzione Decode è programmata per decifrare SOLO se la risposta è in base64, se no, restituisce il body della risposta base
         let finalResult = AxiosUtils.Strings.Decode(result);
-        //controllo se la risposta contiene l'errore 401, se si vuoldire che l'accessToken è scadto e va eseguito il refresh.
+        //controllo se la risposta contiene l'errore 401, se contiene l'errore l'accessToken è scaduto e va eseguito il refresh.
         if (finalResult?.error?.status === 401) {
             console.error('accessToken scaduto, Tentativo di Refresh del token...')
             if (await refreshAccessToken(baseQuery, api, extraOptions)) {
@@ -104,6 +89,19 @@ export const AxiosHTTP = (options: Options) => {
 
         return finalResult;
     };
+
+    //argomenti ripreparati che verrano passati alla query per eseguire le chiamate
+    const argsForQuery = {
+        url: newOptions.url,
+        method: newOptions.method,
+        body: newOptions.body
+    }
+
+    // oggetto che comprende le azioni redux con accesso diretto allo store
+    const apiForQuery = {
+        dispatch: store.dispatch,
+        getState: store.getState
+    }
 
     //eseguo la chiamata
     return baseQueryWithReauth(argsForQuery, apiForQuery, {});

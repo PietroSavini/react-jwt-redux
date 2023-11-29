@@ -12,8 +12,6 @@ class Serializer {
       const name = element.getAttribute('name');
       const value = (element as HTMLInputElement).value;
       const numericValue = parseFloat(value);
-      //aggiungo la classe selected solo per debug visivo
-      //element.classList.add('selected');
 
       if (name) {
         formData[name] =  isNaN(numericValue) ? value : numericValue;
@@ -28,7 +26,7 @@ class Serializer {
       }
       return result
     }else{
-      throw console.error('ERRORE DI SERIALIZZAZIONE: accettarsi di aver inserito un selettore CSS corretto accoppiato al giusto tipo di selectorType (1: per ricerca tramite selettore CSS | 2: per ricerca di attributo etc)');
+      throw console.error('ERRORE DI SERIALIZZAZIONE: accettarsi di aver inserito un selettore CSS corretto accoppiato al giusto tipo di selectorType (0: per ricerca tramite selettore CSS | 1: per ricerca di attributo etc)');
     };
   };
 
@@ -43,7 +41,7 @@ class Serializer {
           const selection = document.querySelectorAll(selector); 
           console.log(`selettore CSS:  ${selector}`,selection);
           result = this.groupElementsByCssSelector(selection)
-        break;
+      break;
 
       //altri casi es raggruppamento per attributi.
       case 1:
@@ -72,22 +70,18 @@ class Serializer {
       return inputs;
     }
   
-  
     // funzione che restituisce array di input dopo aver invocato la funzione ricorsiva findInputElements sul nodo derivante dal querySelectorAll
     private static groupElementsByCssSelector(selection: NodeListOf<Element>): Element[] {
       //array che contiene tutti gli elementi figli della selection
-      
       const allInputs: Element[] = [];
-  
+
       // Per ogni elemento nella selezione, cercare tutti gli input nidificati
       selection.forEach((node) => {
         allInputs.push(...this.findInputElements(node));
       });
   
       return allInputs;
-    
     }
-
 
   //funzione di controllo del JSON di uscita
   private static isJSON(entryJSON : Object): boolean {

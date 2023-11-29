@@ -15,7 +15,7 @@ type TableData = {
 //1) il Componente DataTable accetta un array di oggetti TableData come data
 export const DataTable = ({ data }: { data: TableData }) => {
 
-    // creo le rows con useMemo per ottimizare il render dei componenti
+    // utilizzo useMemo per memorizzare le Rows derivanti da Data, questo metodo previene ricalcoli non necessari quando il componente renderizza di nuovo
     const rows = React.useMemo(() => {
         if (data) {
             return data.map(item => ({
@@ -65,7 +65,6 @@ export const DataTable = ({ data }: { data: TableData }) => {
                             backgroundColor: '#f5f5f5',
                         }
                     }}
-
                 />
             </Grid>
         </Grid>

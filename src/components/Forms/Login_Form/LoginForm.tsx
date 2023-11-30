@@ -6,9 +6,9 @@ import { useAppDispatch } from '../../../app/ReduxTSHooks';
 import { setCredentials } from '../../../app/store/Slices/authSlice';
 import { AxiosHTTP } from '../../../app/AXIOS_ENGINE/AxiosHTTP';
 import FaceIcon from '@mui/icons-material/Face';
-import './LoginForm.scss';
 import useThrottled from '../../../app/Hooks/useThrottledHook';
 import Serializer from '../../../app/AXIOS_ENGINE/AxiosSERIALIZER';
+import './LoginForm.scss';
 
 export const LoginForm = () => {
 
@@ -45,7 +45,7 @@ export const LoginForm = () => {
                 console.error('ERRORE:', err);
             }
         },
-        1000 
+        1000
     );
 
     return (

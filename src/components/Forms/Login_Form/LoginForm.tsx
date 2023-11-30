@@ -6,8 +6,8 @@ import { useAppDispatch } from '../../../app/ReduxTSHooks';
 import { setCredentials } from '../../../app/store/Slices/authSlice';
 import { AxiosHTTP } from '../../../app/AXIOS_ENGINE/AxiosHTTP';
 import FaceIcon from '@mui/icons-material/Face';
-import './LoginForm.scss'
-
+import './LoginForm.scss';
+import useThrottled from '../../Forms/onSubmitWithThrottle';
 import Serializer from '../../../app/AXIOS_ENGINE/AxiosSERIALIZER';
 
 export const LoginForm = () => {
@@ -21,32 +21,33 @@ export const LoginForm = () => {
     const dispatch = useAppDispatch();
     const [genErr, setGenErr] = useState('')
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = useThrottled(
+        async (data: any) => {
+            const user = getValues('username');
 
-        const user = getValues('username')
-
-        try {
-            const result = await AxiosHTTP({ url: '/api/Test/Login', auth: false, body: data });
-            if ('data' in result) {
-                const accessToken = result.data.accessToken;
-                dispatch(setCredentials({ accessToken, user }));
-               console.log('user ed accessToken salvati nello state')
-                navigate('/dashboard')
-            } else if ('error' in result) {
-                const err = result.error
-                if (!err?.originalStatus) {
-                    setGenErr('nessuna risposta dal server')
-                } else if (err.originalStatus === 403) {
-                    setGenErr('non autorizzato')
-                } else {
-                    setGenErr('logIn Fallito')
+            try {
+                const result = await AxiosHTTP({ url: '/api/Test/Login', auth: false, body: data });
+                if ('data' in result) {
+                    const accessToken = result.data.accessToken;
+                    dispatch(setCredentials({ accessToken, user }));
+                    console.log('user ed accessToken salvati nello state');
+                    navigate('/dashboard');
+                } else if ('error' in result) {
+                    const err = result.error;
+                    if (!err?.originalStatus) {
+                        setGenErr('nessuna risposta dal server');
+                    } else if (err.originalStatus === 403) {
+                        setGenErr('non autorizzato');
+                    } else {
+                        setGenErr('logIn Fallito');
+                    }
                 }
-            };
-        } catch (err: any) {
-            console.error('ERRORE:', err)
-        }
-
-    }
+            } catch (err: any) {
+                console.error('ERRORE:', err);
+            }
+        },
+        1000 
+    );
 
     return (
 

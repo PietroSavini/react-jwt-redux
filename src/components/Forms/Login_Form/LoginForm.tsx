@@ -7,7 +7,7 @@ import { setCredentials } from '../../../app/store/Slices/authSlice';
 import { AxiosHTTP } from '../../../app/AXIOS_ENGINE/AxiosHTTP';
 import FaceIcon from '@mui/icons-material/Face';
 import './LoginForm.scss';
-import useThrottled from '../../Forms/onSubmitWithThrottle';
+import useThrottled from '../../../app/Hooks/useThrottledHook';
 import Serializer from '../../../app/AXIOS_ENGINE/AxiosSERIALIZER';
 
 export const LoginForm = () => {
@@ -24,7 +24,6 @@ export const LoginForm = () => {
     const onSubmit = useThrottled(
         async (data: any) => {
             const user = getValues('username');
-
             try {
                 const result = await AxiosHTTP({ url: '/api/Test/Login', auth: false, body: data });
                 if ('data' in result) {

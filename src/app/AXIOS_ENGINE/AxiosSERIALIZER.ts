@@ -22,7 +22,6 @@ class Serializer {
     if (Object.keys(formData).length > 0){
       if(this.isJSON(formData)){
         result = formData;
-        console.log('Serializzazione effettuata: ', result)
       }
       return result
     }else{
@@ -39,7 +38,6 @@ class Serializer {
       //caso di raggruppamento per selettori CSS
       case 0: 
           const selection = document.querySelectorAll(selector); 
-          console.log(`selettore CSS:  ${selector}`,selection);
           result = this.groupElementsByCssSelector(selection)
       break;
 

@@ -1,4 +1,4 @@
-// funzione onSubmit con throttling per evitare le chiamate continue
+// Custom Hook di throttling per evitare troppe chiamate 
 
 import { useState } from 'react';
 
@@ -7,7 +7,6 @@ import { useState } from 'react';
 
     return (...args:any) => {
         const now = new Date().getTime();
-
         if (now - timer < delay) {
             return;
         } else {

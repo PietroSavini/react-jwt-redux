@@ -9,6 +9,7 @@ import FaceIcon from '@mui/icons-material/Face';
 import useThrottled from '../../../app/Hooks/useThrottledHook';
 import Serializer from '../../../app/AXIOS_ENGINE/AxiosSERIALIZER';
 import './LoginForm.scss';
+import { closeLoader, openLoader } from '../../../app/store/Slices/loaderSlice';
 
 export const LoginForm = () => {
 
@@ -22,16 +23,20 @@ export const LoginForm = () => {
     const [genErr, setGenErr] = useState('')
 
     const onSubmit = useThrottled(
+        
         async (data: any) => {
+            dispatch(openLoader());
             const user = getValues('username');
             try {
                 const result = await AxiosHTTP({ url: '/api/Test/Login', auth: false, body: data });
                 if ('data' in result) {
+                    dispatch(closeLoader())
                     const accessToken = result.data.accessToken;
                     dispatch(setCredentials({ accessToken, user }));
                     console.log('user ed accessToken salvati nello state');
                     navigate('/dashboard');
                 } else if ('error' in result) {
+                    dispatch(closeLoader())
                     const err = result.error;
                     if (!err?.originalStatus) {
                         setGenErr('nessuna risposta dal server');
@@ -43,6 +48,7 @@ export const LoginForm = () => {
                 }
             } catch (err: any) {
                 console.error('ERRORE:', err);
+                dispatch(closeLoader())
             }
         },
         1000

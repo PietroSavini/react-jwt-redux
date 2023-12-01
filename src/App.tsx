@@ -9,10 +9,13 @@ import { DashboardPage } from './pages/Auth/DashBoard/DashboardPage';
 import { MainPage } from './pages/Public/HomePage/MainPage';
 import { PersistentLogin } from './components/PersistentLogin';
 import  RequireAuth  from './components/RequireAuth'
+import { useAppDispatch, useAppSelector } from './app/ReduxTSHooks';
+import Loader from './components/partials/Loader/Loader';
+import { loaderSelector, openLoader } from './app/store/Slices/loaderSlice';
 
 
 
-function App() {
+function App() {  
   useEffect(() => {
     
     //abilito / disabilito console.log()
@@ -50,8 +53,10 @@ function App() {
 
             {/* Catch All */}
             <Route path='*' element={<NotFound/>}/>
+            
         </Route>
       </Routes>
+      
     </>
   )
 }

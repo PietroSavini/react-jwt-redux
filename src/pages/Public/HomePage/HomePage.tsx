@@ -1,10 +1,8 @@
 import { Link, Outlet } from 'react-router-dom';
-import { useAppSelector } from '../../../app/ReduxTSHooks';
-import { loaderSelector } from '../../../app/store/Slices/loaderSlice';
 import Loader from '../../../components/partials/Loader/Loader';
 
 export const HomePage = () => {
-    const { isOpen } = useAppSelector(loaderSelector);
+    
 
   return (
     <div className='APP'>
@@ -31,7 +29,7 @@ export const HomePage = () => {
                 <p>Footer element</p>
             </div>
         </footer>
-        {isOpen ? <Loader /> : null}
+        <Loader />
     </div>
   )
 }

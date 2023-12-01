@@ -25,6 +25,7 @@ export const LoginForm = () => {
     const onSubmit = useThrottled(
         
         async (data: any) => {
+            setGenErr('')
             dispatch(openLoader());
             const user = getValues('username');
             try {

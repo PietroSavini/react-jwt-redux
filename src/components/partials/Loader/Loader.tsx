@@ -11,7 +11,7 @@ const Loader: React.FC<LoaderProps> = ({style={}}) => {
         <div style={style} className="ax-loader">
             <div className="ax-loader-inner">
 				<div className="ax-loader-spinner"></div>
-                 <img src="/icon-loader.svg" /> 
+                 {/* <img src="/icon-loader.svg" />  */}
             </div>
         </div>
     )

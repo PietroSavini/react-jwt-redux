@@ -9,27 +9,23 @@ import { DashboardPage } from './pages/Auth/DashBoard/DashboardPage';
 import { MainPage } from './pages/Public/HomePage/MainPage';
 import { PersistentLogin } from './components/PersistentLogin';
 import  RequireAuth  from './components/RequireAuth'
-import { useAppDispatch, useAppSelector } from './app/ReduxTSHooks';
-import Loader from './components/partials/Loader/Loader';
-import { loaderSelector, openLoader } from './app/store/Slices/loaderSlice';
+
 
 
 
 function App() {  
   useEffect(() => {
-    
+
+    Utility.Logger.disable()
     //abilito / disabilito console.log()
     /*
       //per farlo funzionare si deve sviluppare EndPoint
       //faccio chiamata al server su endpoint che risponde in base alla decisione di loggare o non
       //se ritorna 0 non loggo se ritorna 1 loggo
-      const result = AxiosHTTP('/api/Test/logger', method:'GET' ...etc)
-      if (result.data === 1){
+      const result = await AxiosHTTP('/api/Test/logger', method:'GET' ...etc)
+      if (result.data !== 0){
         Utility.Logger.enable()
         console.log('console log abilitato')
-      }else {
-        Utility.Logger.disable()
-      }
     */
     
   }, [])

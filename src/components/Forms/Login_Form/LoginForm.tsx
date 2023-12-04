@@ -48,7 +48,7 @@ export const LoginForm = () => {
                     }
                 }
             } catch (err: any) {
-                console.error('ERRORE:', err);
+                console.error('ERRORE: ', err);
                 dispatch(closeLoader())
             }
         },
